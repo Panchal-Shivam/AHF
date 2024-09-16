@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>NExecutive Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        body {
+            background-color: #f4f4f4;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        .navbar {
+            background-color: #31363F;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar h1 {
+            font-size: 1.5em;
+            font-weight: 500;
+        }
+        .hamburger {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .sidebar {
+            display: none;
+            background-color: #000;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 70%;
+            height: 100%;
+            padding: 20px;
+            border-radius: 0 0 0 5px;
+            z-index: 1000;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            transform: translateX(100%);
+        }
+        .sidebar.show {
+            display: block;
+            transform: translateX(0);
+        }
+        .sidebar ul {
+            list-style-type: none;
+        }
+        .sidebar ul li {
+            padding: 10px 0;
+            text-align: left;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        .dashboard-content {
+            padding: 20px;
+        }
+        .dashboard-content h2 {
+            color: #000;
+        }
+        /* Main Advantage Section */
+        .main-advantage {
+            background-color: #313633;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .main-advantage h3 {
+            font-size: 1.5em;
+            margin-bottom: 8px;
+        }
+        .main-advantage p {
+            font-size: 1em;
+        }
+        /* Products Section */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .product-box {
+            background-color: #fff;
+            padding: 20px;
+            border: 2px solid #000;
+            text-align: left;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        .product-box h4 {
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            color: #000;
+        }
+        .product-box .rate {
+            display: flex;
+            flex-direction: column;
+        }
+        .product-box p {
+            font-size: 1.1em;
+            color: #000;
+            margin-bottom: 8px;
+        }
+        /* Responsive Styles */
+        @media screen and (max-width: 1024px) {
+            .navbar h1 {
+                font-size: 1.3em;
+            }
+            .products {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+        @media screen and (max-width: 768px) {
+            .navbar h1 {
+                font-size: 1.2em;
+            }
+            .sidebar {
+                width: 80%; /* Adjust width for small screens */
+            }
+            .products {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 15px;
+            }
+        }
+        @media screen and (max-width: 480px) {
+            .navbar h1 {
+                font-size: 1em;
+            }
+            .products {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <h1>Himanshu Kapadia</h1>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div id="bar1"></div>
+            <div id="bar2"></div>
+            <div id="bar3"></div>
+        </div>
+    </nav>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+    <!-- Sidebar (hidden by default) -->
+    <div class="sidebar" id="sidebar">
+        <ul>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="connector.html">Comission</a></li>
+            <li><a href="general_policy.html">General Policy</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-content">
+        <!-- Main Advantage Section -->
+        <div class="main-advantage">
+            <h3>Get Loans with a Credit Score of 300+</h3>
+            <p> We offer a range of loan products, including Home Loans, Commercial Property Loans, and Loan Against Property (LAP), designed for bank salaried, cash salaried, and business owners. Whether you need a residential or commercial loan, we’ve got you covered—even if your credit score is as low as 300.</p>
+        </div>
+
+        <!-- Products Section -->
+        <div class="products">
+            <div class="product-box">
+                <h4>HL (Home Loan)</h4>
+                <div class="rate">
+                    <p>Bank Credit: 10.50%</p>
+                    <p>SENP Formal: 11.50%</p>
+                    <p>Cash Salaried: 13.00%</p>
+                    <p>NIP: 12.00%</p>
+                </div>
+            </div>
+            <div class="product-box">
+                <h4>LAP (Loan Against Property)</h4>
+                <div class="rate">
+                    <p>Bank Salaried: 15.00%</p>
+                    <p>Cash Salaried & SENP: 17.00%</p>
+                </div>
+            </div>
+            <div class="product-box">
+                <h4>BT (Balance Transfer)</h4>
+                <div class="rate">
+                    <p>Bank Salaried: 10.50%</p>
+                    <p>1% Less on Existing</p>
+                </div>
+            </div>
+            <div class="product-box">
+                <h4>BT Top-Up</h4>
+                <div class="rate">
+                    <p>Interest Rate: 0%</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const bar1 = document.getElementById('bar1');
+            const bar2 = document.getElementById('bar2');
+            const bar3 = document.getElementById('bar3');
+
+            // Toggle sidebar and overlay display
+            if (sidebar.classList.contains('show')) {
+                sidebar.classList.remove('show');
+                overlay.style.display = "none";
+                bar1.style.transform = "rotate(0)";
+                bar2.style.opacity = "1";
+                bar3.style.transform = "rotate(0)";
+            } else {
+                sidebar.classList.add('show');
+                overlay.style.display = "block";
+                bar1.style.transform = "rotate(45deg) translate(5px, 5px)";
+                bar2.style.opacity = "0";
+                bar3.style.transform = "rotate(-45deg) translate(6px, -6px)";
+            }
+        }
+    </script>
+
+</body>
+</html>

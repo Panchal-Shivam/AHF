@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connector - Calculate Payout</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        body {
+            background-color: #f4f4f4;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        .navbar {
+            background-color: #313633;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar h1 {
+            font-size: 1.5em;
+            font-weight: 500;
+        }
+        .hamburger {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .sidebar {
+            display: none;
+            background-color: #000000;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 70%; /* Adjust width for small screens */
+            height: 100%;
+            padding: 20px;
+            border-radius: 0 0 0 5px;
+            z-index: 1000;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            transform: translateX(100%);
+        }
+        .sidebar.show {
+            display: block;
+            transform: translateX(0);
+        }
+        .sidebar ul {
+            list-style-type: none;
+        }
+        .sidebar ul li {
+            padding: 10px 0;
+            text-align: left;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /*connector Specific Styles */
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+
+       #executive_name{
+           color: White;
+       }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #313633;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1em;
+            cursor: pointer;
+        }   
+
+        button:hover {
+            background-color: #1d3a7b;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .result p {
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        @media screen and (max-width: 768px) {
+            .navbar h1 {
+                font-size: 1.2em;
+            }
+            .sidebar {
+                width: 80%; /* Adjust width for small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <h1 id="executive_name">Himanshu Kapadia</h1>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div id="bar1"></div>
+            <div id="bar2"></div>
+            <div id="bar3"></div>
+        </div>
+    </nav>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+    <!-- Sidebar (hidden by default) -->
+    <div class="sidebar" id="sidebar">
+        <ul>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="connector.html">Comission</a></li>
+            <li><a href="general_policy.html">General Policy</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- connector Content -->
+   <h1>Payout Structure</h1>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Loan Amount Range (₹)</th>
+                    <th>Payout Rate (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>0 - 30,00,000</td>
+                    <td>0.40%</td>
+                </tr>
+                <tr>
+                    <td>30,00,001 - 40,00,000</td>
+                    <td>0.50%</td>
+                </tr>
+                <tr>
+                    <td>40,00,001 - 60,00,000</td>
+                    <td>0.50%</td>
+                </tr>
+                <tr>
+                    <td>60,00,001 - 75,00,000</td>
+                    <td>0.75%</td>
+                </tr>
+                <tr>
+                    <td>Above 75,00,000</td>
+                    <td>0.80%</td>
+                </tr>
+            </tbody>
+        </table>
+        
+    <h1>Calculate Your Payout</h1>
+    <div class="container">
+        <label for="loanAmount">Enter Loan Amount (in ₹):</label>
+        <input type="number" id="loanAmount" placeholder="Enter amount in ₹" />
+
+        <button onclick="calculatePayout()">Calculate Payout</button>
+
+        <div class="result" id="result">
+            <p><strong>Loan Amount:</strong> ₹<span id="loanValue"></span></p>
+            <p><strong>Payout Rate:</strong> <span id="payoutRate"></span>%</p>
+            <p><strong>Total Payout:</strong> ₹<span id="totalPayout"></span></p>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const bar1 = document.getElementById('bar1');
+            const bar2 = document.getElementById('bar2');
+            const bar3 = document.getElementById('bar3');
+
+            // Toggle sidebar and overlay display
+            if (sidebar.classList.contains('show')) {
+                sidebar.classList.remove('show');
+                overlay.style.display = "none";
+                bar1.style.transform = "rotate(0)";
+                bar2.style.opacity = "1";
+                bar3.style.transform = "rotate(0)";
+            } else {
+                sidebar.classList.add('show');
+                overlay.style.display = "block";
+                bar1.style.transform = "rotate(45deg) translate(5px, 5px)";
+                bar2.style.opacity = "0";
+                bar3.style.transform = "rotate(-45deg) translate(6px, -6px)";
+            }
+        }
+
+        function calculatePayout() {
+            const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+            let payoutRate = 0;
+
+            // Determine payout rate based on loan amount in rupees
+            if (loanAmount >= 0 && loanAmount <= 3000000) {
+                payoutRate = 0.40;
+            } else if (loanAmount > 3000000 && loanAmount <= 4000000) {
+                payoutRate = 0.50;
+            } else if (loanAmount > 4000000 && loanAmount <= 6000000) {
+                payoutRate = 0.50;
+            } else if (loanAmount > 6000000 && loanAmount <= 7500000) {
+                payoutRate = 0.75;
+            } else if (loanAmount > 7500000) {
+                payoutRate = 0.80;
+            } else {
+                alert("Please enter a valid loan amount.");
+                return;
+            }
+
+            // Calculate the total payout
+            const totalPayout = (loanAmount * payoutRate) / 100;
+
+            // Display the result
+            document.getElementById('loanValue').innerText = loanAmount.toLocaleString('en-IN');
+            document.getElementById('payoutRate').innerText = payoutRate.toFixed(2);
+            document.getElementById('totalPayout').innerText = totalPayout.toLocaleString('en-IN', {maximumFractionDigits: 2});
+
+            document.getElementById('result').style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>

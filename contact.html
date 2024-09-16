@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Contact Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        body {
+            background-color: #f4f4f4;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        .navbar {
+            background-color: #313633;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar h1 {
+            font-size: 1.5em;
+            font-weight: 500;
+        }
+        .hamburger {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .sidebar {
+            display: none;
+            background-color: #000000;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 250px; /* Adjust width for sidebar */
+            height: 100%;
+            padding: 20px;
+            border-radius: 0 0 0 8px;
+            z-index: 1000;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            transform: translateX(100%);
+        }
+        .sidebar.show {
+            display: block;
+            transform: translateX(0);
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        .content {
+            padding: 20px;
+        }
+        .contact-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px auto;
+            max-width: 600px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .contact-container img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        .contact-container h2 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+        .contact-container p {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 10px 0;
+            text-align: left;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            display: block;
+            padding: 5px 10px;
+            transition: background-color 0.3s;
+        }
+        .sidebar ul li a:hover {
+            background-color: #333333;
+            border-radius: 4px;
+        }
+        /* Responsive Styles */
+        @media screen and (max-width: 768px) {
+            .navbar h1 {
+                font-size: 1.2em;
+            }
+            .sidebar {
+                width: 80%; /* Adjust width for small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <h1> Himanshu Kapadia</h1>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div id="bar1"></div>
+            <div id="bar2"></div>
+            <div id="bar3"></div>
+        </div>
+    </nav>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+    <!-- Sidebar (hidden by default) -->
+    <div class="sidebar" id="sidebar">
+        <ul>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="connector.html">Comission</a></li>
+            <li><a href="general_policy.html">General Policy</a></li>
+            <li><a href="contact.html">Contact Form</a></li>
+        </ul>
+    </div>
+
+    <!-- Contact Content -->
+    <div class="content">
+        <div class="contact-container">
+            <!-- Sample Profile Image -->
+            <img src="https://via.placeholder.com/100" alt="Profile Image">
+
+            <!-- Contact Details -->
+            <h2>Himanshu Kapadia</h2>
+            <p>Phone: +1234567890</p>
+            <p>Email: abc@gmail.com</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const bar1 = document.getElementById('bar1');
+            const bar2 = document.getElementById('bar2');
+            const bar3 = document.getElementById('bar3');
+
+            // Toggle sidebar and overlay display
+            if (sidebar.classList.contains('show')) {
+                sidebar.classList.remove('show');
+                overlay.style.display = 'none';
+                bar1.style.transform = 'rotate(0)';
+                bar2.style.opacity = '1';
+                bar3.style.transform = 'rotate(0)';
+            } else {
+                sidebar.classList.add('show');
+                overlay.style.display = 'block';
+                bar1.style.transform = 'rotate(45deg) translate(5px, 5px)';
+                bar2.style.opacity = '0';
+                bar3.style.transform = 'rotate(-45deg) translate(6px, -6px)';
+            }
+        }
+    </script>
+
+</body>
+</html>
